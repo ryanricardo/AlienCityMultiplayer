@@ -195,6 +195,7 @@ GameObject:
   - component: {fileID: 603684932923903020}
   - component: {fileID: 5824703151833942670}
   - component: {fileID: 7099350957268305988}
+  - component: {fileID: 7998044130276423935}
   m_Layer: 0
   m_Name: Text (TMP) - Ammo
   m_TagString: Untagged
@@ -317,6 +318,28 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7998044130276423935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830386111023432688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2009446159633414186
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,6 +455,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TextAmmo: {fileID: 7099350957268305988}
   slider: {fileID: 2847479743892842961}
+  pistol: {fileID: 296234452796022913}
+  playerController: {fileID: 6826481834694161483}
 --- !u!1 &3914564087233961024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1462,6 +1487,8 @@ MonoBehaviour:
   - {fileID: 9032672649127244035}
   - {fileID: 6442620270784530782}
   - {fileID: -8990807196803140896}
+  - {fileID: 6826481834694161483}
+  - {fileID: 5975898443824950246}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

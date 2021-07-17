@@ -5,7 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 
 
-public class PlayerController : MonoBehaviourPun
+public class PlayerController : MonoBehaviourPun, IPunObservable
 {
     
     public float life;
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviourPun
         AxisVertical = Input.GetAxis("Vertical");
 
         transform.Translate(new Vector3(0, 0, AxisVertical * 15 * Time.deltaTime));
-        transform.Rotate(new Vector3(0, AxisHorizontal * 20, 0));
+        transform.Rotate(new Vector3(0, AxisHorizontal * 5, 0));
     }
 
 
@@ -71,9 +71,17 @@ public class PlayerController : MonoBehaviourPun
         }
     }
 
-    [PunRPC]
+    public void RPCLostLife()
+    {
+        photonView.RPC("LostLife", RpcTarget.All);
+    }
 
-    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    [PunRPC]
+    public void LostLife()
+    {
+        life -= 5;
+    }
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if(stream.IsWriting)
         {

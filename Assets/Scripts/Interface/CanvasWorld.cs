@@ -6,39 +6,45 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 
-public class CanvasWorld : MonoBehaviourPunCallbacks
+public class CanvasWorld : MonoBehaviourPunCallbacks, IPunObservable
+
 {
 
     public TextMeshProUGUI TextAmmo;
     public Slider          slider;
 
-    private Pistol pistol;
-    private PlayerController playerController;
+    public Pistol pistol;
+    public PlayerController playerController;
+
+
 
     void Start()
     {
-        playerController = FindObjectOfType<PlayerController>();
-        pistol = FindObjectOfType<Pistol>();
+        
     }
 
     void Update()
     {
-        TextAmmo.text = pistol.Ammo.ToString();
-        slider.value = playerController.life;
+        
+        TextAmmo.text = pistol.GetComponent<Pistol>().Ammo.ToString();
+        slider.value = playerController.GetComponent<PlayerController>().life;
     }
 
     [PunRPC]
-
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if(stream.IsWriting)
         {
+            stream.SendNext(pistol.Ammo);     
             stream.SendNext(playerController.life);
-            stream.SendNext(slider.value);
-        } else 
+            stream.SendNext(slider.value);     
+            stream.SendNext(TextAmmo.text);   
+        }else
         {
-            slider.value = (float) stream.ReceiveNext();
+            pistol.Ammo = (int) stream.ReceiveNext();
             playerController.life = (float) stream.ReceiveNext();
         }
     }
+
+
 }

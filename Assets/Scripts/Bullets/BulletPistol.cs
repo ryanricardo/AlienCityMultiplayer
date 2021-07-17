@@ -5,8 +5,10 @@ using Photon.Pun;
 
 public class BulletPistol : MonoBehaviourPun
 {
+    CanvasWorld canvasWorld;
     void Start()
     {
+        canvasWorld = FindObjectOfType<CanvasWorld>();
         Invoke("Destroy", 5);
     }
 
@@ -22,25 +24,23 @@ public class BulletPistol : MonoBehaviourPun
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Statics"))
+        if(!PhotonNetwork.IsMasterClient){return;}
+
+        if(other.CompareTag("Statics"))
         {
-            if(PhotonNetwork.IsMasterClient)
-            {
-                PhotonNetwork.Destroy(gameObject);
-            }
+            PhotonNetwork.Destroy(this.gameObject);
+        }
+
+        if(other.CompareTag("Player"))
+        {
+            other.GetComponent<PlayerController>().RPCLostLife();
+            PhotonNetwork.Destroy(this.gameObject);
             
         }
-
-        if(other.gameObject.CompareTag("Player"))
-        {
-            PlayerController inimigo = other.gameObject.GetComponent<PlayerController>();
-            inimigo.life -= 5;
-            if(PhotonNetwork.IsMasterClient)
-            {
-                PhotonNetwork.Destroy(gameObject);
-            }
-        }
-        
-
     }
+
+
+
+
+
 }

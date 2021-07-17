@@ -41,6 +41,10 @@ MonoBehaviour:
   - AtualizaTextoStatus
   - OnPhotonSerializeView
   - Victory
+  - RefreshLifeAndAmmo
+  - LostLife
+  - SubmitAmmo
+  - MoreAmmo
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

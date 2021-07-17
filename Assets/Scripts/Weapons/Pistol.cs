@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Pistol : MonoBehaviourPun
+public class Pistol : MonoBehaviourPun, IPunObservable
 {
     private PlayerController player;
-
     public int        Ammo;
     public GameObject PrefabBullet;
     public Transform  TransformExitBullet;
 
     void Start()
     {
+        if(!photonView.IsMine){return;}
         Ammo = 10;
         player = FindObjectOfType<PlayerController>();
     }
@@ -30,7 +30,31 @@ public class Pistol : MonoBehaviourPun
         {
             PhotonNetwork.Instantiate(PrefabBullet.name, TransformExitBullet.transform.position, 
             TransformExitBullet.transform.rotation);
-            Ammo -= 1;
+            RPCSubmitAmmo();
+        }
+    }
+
+    public void RPCSubmitAmmo()
+    {
+        photonView.RPC("SubmitAmmo", RpcTarget.All);
+    }
+    
+
+    [PunRPC]
+
+    
+    public void SubmitAmmo()
+    {
+        Ammo -= 1;
+    }
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if(stream.IsWriting)
+        {
+            stream.SendNext(Ammo);
+        }else 
+        {
+            Ammo = (int) stream.ReceiveNext();
         }
     }
 }
