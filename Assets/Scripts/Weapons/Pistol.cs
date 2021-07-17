@@ -39,10 +39,19 @@ public class Pistol : MonoBehaviourPun, IPunObservable
         photonView.RPC("SubmitAmmo", RpcTarget.All);
     }
     
+    public void RPCMoreAmmo()
+    {
+        photonView.RPC("MoreAmmo", RpcTarget.All);
+    }
 
     [PunRPC]
 
-    
+    public void MoreAmmo()
+    {
+        Ammo = 10;
+    }
+
+    [PunRPC]
     public void SubmitAmmo()
     {
         Ammo -= 1;

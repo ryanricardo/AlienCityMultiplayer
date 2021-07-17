@@ -19,14 +19,14 @@ public class CasesAmmunation : MonoBehaviourPun
 
     void OnCollisionEnter (Collision other)
     {
-        if(!PhotonNetwork.IsMasterClient){return;}
+        
         
         if(other.gameObject.CompareTag("Player"))
         {
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
             if(player.GetComponentInChildren<Pistol>().Ammo <= 10)
             {
-                player.GetComponentInChildren<Pistol>().Ammo = 10;
+                player.GetComponentInChildren<Pistol>().RPCMoreAmmo();
                 PhotonNetwork.Destroy(gameObject);
             }
 
